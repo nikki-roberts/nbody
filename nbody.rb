@@ -10,9 +10,9 @@ class NbodySimulation < Gosu::Window
     @background_image = Gosu::Image.new("images/space.jpg", tileable: true)
     simulation = open(file) 
     info = simulation.read
-
+    radius_of_universe = 0
     line_num = 0
-    bodies = []
+    @bodies = []
     File.open(file).each do |line| # opening the file in the nbody class, so as to only open once
     # not opening every time a body is created
       line_num += 1
@@ -20,12 +20,11 @@ class NbodySimulation < Gosu::Window
       if line_num == 1  # skipping the first two lines before the planets
         number_of_bodies = info
       elsif line_num == 2 
-        radius_of_universe = info
+        radius_of_universe = info[0].to_f
       elsif line_num != 1 && line_num != 2
         
-        newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5].to_f)
-        bodies.push(newBody)
-        puts bodies[0]
+        newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5].to_s, radius_of_universe)
+        @bodies.push(newBody)
       end
 
     end
@@ -38,9 +37,9 @@ class NbodySimulation < Gosu::Window
 
   def draw
     @background_image.draw(0, 0, ZOrder::Background)
-    # @bodies.each do |body|
-    #   body.draw()
-    # end
+    @bodies.each do |body|
+      body.draw()
+    end
   end
 
   def button_down(id)
