@@ -1,5 +1,8 @@
 require "gosu"
 require_relative "z_order"
+require "mathn"
+
+G = 6.67408e-11
 
 class Body
 
@@ -25,8 +28,15 @@ class Body
 
 	end
 
-	def calculate_force(mass1, mass2, )
-
+	def calculate_distance(dx, dy)
+		distance = sqrt((dx * dx) + (dy * dy))
+		return distance
 	end
 
+	def calculate_force(mass1, mass2)
+		force = (G * mass1 * mass2) / (distance * distance)
+		return force
+	end
+
+	
 end
