@@ -26,13 +26,21 @@ class NbodySimulation < Gosu::Window
         newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5].to_s, radius_of_universe)
         @bodies.push(newBody)
       end
-
     end
-
   end
 
   def update
+    # total = 0
 
+    @bodies.each do |body|
+      # total = 0
+      @bodies.each do |other_body| 
+        # total += 1
+        # puts total
+        result = body.compare(other_body)
+        puts result
+      end
+    end
   end
 
   def draw
