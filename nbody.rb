@@ -39,7 +39,6 @@ class NbodySimulation < Gosu::Window
     @background_image.draw(0, 0, ZOrder::Background)
     @bodies.each do |body|
       body.draw()
-      puts body.calculate_force()
     end
   end
 

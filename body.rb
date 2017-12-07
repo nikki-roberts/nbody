@@ -28,15 +28,29 @@ class Body
 
 	end
 
-	def calculate_distance(dx, dy)
-		distance = sqrt((dx * dx) + (dy * dy))
-		return distance
+	def compare_bodies()
+
 	end
 
-	def calculate_force(mass1, mass2)
-		force = (G * mass1 * mass2) / (distance * distance)
-		return force
-	end
+	# def calculate_dx(x1, x2)
+	# 	dx = 
+	# 	return dx
+	# end
+
+	# def calculate_dy(y1, y2)
+	# 	dy =
+	# 	return dy
+	# end
+
+	# def calculate_distance(dx, dy)
+	# 	distance = sqrt((dx * dx) + (dy * dy))
+	# 	return distance
+	# end
+
+	# def calculate_force(mass1, mass2)
+	# 	force = (G * mass1 * mass2) / (distance * distance)
+	# 	return force
+	# end
 
 	
 end
