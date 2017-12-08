@@ -30,15 +30,14 @@ class NbodySimulation < Gosu::Window
   end
 
   def update
-    # total = 0
-
     @bodies.each do |body|
-      # total = 0
+      body.reset()
+    end
+    @bodies.each do |body|
       @bodies.each do |other_body| 
-        # total += 1
-        # puts total
-        result = body.compare(other_body)
-        puts result
+        if body != other_body
+          body.calculate_force(other_body)
+        end
       end
     end
   end
@@ -53,6 +52,8 @@ class NbodySimulation < Gosu::Window
   def button_down(id)
     close if id == Gosu::KbEscape
   end
+
+ 
 end
 
 file = "simulations/"

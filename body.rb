@@ -28,40 +28,29 @@ class Body
 
 	end
 
-	def compare(other_body)
-		if x_coordinate > other_body.x_coordinate
-			dx = x_coordinate - other_body.x_coordinate
-		else
-			dx = other_body.x_coordinate - x_coordinate
-		end
-		return dx # pretty sure this works
+	def calculate_force(other_body)
+		dx = x_coordinate - other_body.x_coordinate
+		# return dx # pretty sure this works
+		dy = y_coordinate - other_body.y_coordinate
+		# return dy # initiallly returns zeroes bc they're all in a line
 
-		if y_coordinate > other_body.y_coordinate
-			dy = y_coordinate - other_body.y_coordinate
-		else 
-			dy = other_body.y_coordinate - y_coordinate
-		end
-		return dy # initiallly returns zeroes bc they're all in a line
+		distance = Math.sqrt((dx * dx) + (dy * dy))
+		# return distance # probably works
 
-		distance = sqrt((dx * dx) + (dy * dy))
-		return distance # probably works
+		force = (G * mass * other_body.mass) / (distance * distance)
+		# return force
+
+		fx = force * (dx / distance)
+		total_fx += fx
+
+		fy = force * (dy / distance)
+		total_fy += fy
 	end
 
-	# def find_dx(other_body)
-
-	# end
-
-	# def find_dy(other_body)
-
-	# end
-
-	# def distance(other_body)
-		
-	# end
-	# def calculate_force(mass1, mass2)
-	# 	force = (G * mass1 * mass2) / (distance * distance)
-	# 	return force
-	# end
+	def reset
+    	total_fx = 0
+    	total_fy = 0
+  	end
 
 	
 end
