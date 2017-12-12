@@ -36,10 +36,14 @@ class NbodySimulation < Gosu::Window
     @bodies.each do |body|
       @bodies.each do |other_body| 
         if body != other_body
-          puts body.calculate_force(other_body)
+          body.calculate_totals(other_body)
         end
       end
     end
+    @bodies.each do |body|
+      puts body.calc_acc(body)
+    end
+
   end
 
   def draw
