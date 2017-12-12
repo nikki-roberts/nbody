@@ -40,11 +40,15 @@ class Body
 		force = (G * mass * other_body.mass) / (distance * distance)
 		# return force
 
+		total_fx = 0
 		fx = force * (dx / distance)
 		total_fx += fx
+		# return total_fx # pretty sure this works
 
+		total_fy = 0
 		fy = force * (dy / distance)
 		total_fy += fy
+		# return total_fy # this works before planets start moving
 	end
 
 	def reset

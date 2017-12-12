@@ -36,7 +36,7 @@ class NbodySimulation < Gosu::Window
     @bodies.each do |body|
       @bodies.each do |other_body| 
         if body != other_body
-          body.calculate_force(other_body)
+          puts body.calculate_force(other_body)
         end
       end
     end
