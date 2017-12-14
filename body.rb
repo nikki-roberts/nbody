@@ -30,7 +30,7 @@ class Body
 	end
 
 	def draw()
-		@image.draw(((@x_coordinate/radius_of_universe) * 320) + 320, ((@y_coordinate/radius_of_universe) * 320) + 320, 1) 
+		@image.draw(((@x_coordinate/radius_of_universe) * 320) + 320, (-(@y_coordinate/radius_of_universe) * 320) + 320, 1) 
 	end
 
 	def to_s()

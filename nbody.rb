@@ -35,7 +35,7 @@ class NbodySimulation < Gosu::Window
     end
     @bodies.each do |body|
       @bodies.each do |other_body| 
-        if body != other_body
+        if body.mass != other_body.mass
           body.calculate_totals(other_body)
         end
       end
