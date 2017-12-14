@@ -41,7 +41,9 @@ class NbodySimulation < Gosu::Window
       end
     end
     @bodies.each do |body|
-      puts body.calc_acc(body)
+      body.calc_acc(body)
+      body.calc_vel(body)
+      body.newpos(body)
     end
 
   end

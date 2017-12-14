@@ -2,9 +2,12 @@ require "gosu"
 require_relative "z_order"
 require "mathn"
 
-G = 6.67408e-11
-time = 25000
+
+
 class Body
+
+	G = 6.67408e-11
+	TIME = 25000
 
 	attr_accessor :x_coordinate, :y_coordinate, :x_vel, :y_vel, :mass, :image, :radius_of_universe
 
@@ -20,10 +23,14 @@ class Body
 		@image = Gosu::Image.new(file)
 		@total_fx = 0
 		@total_fy = 0
+		@acc_x = 0
+		@acc_y = 0
+		@v_x = 0
+		@v_y = 0
 	end
 
 	def draw()
-		@image.draw(((@x_coordinate/radius_of_universe) * 320) + 320, ((@y_coordinate/radius_of_universe) * 320) + 320, 1)
+		@image.draw(((@x_coordinate/radius_of_universe) * 320) + 320, ((@y_coordinate/radius_of_universe) * 320) + 320, 1) 
 	end
 
 	def to_s()
@@ -31,41 +38,39 @@ class Body
 	end
 
 	def calculate_totals(other_body)
-		dx = x_coordinate - other_body.x_coordinate
-		# return dx # pretty sure this works
-		dy = y_coordinate - other_body.y_coordinate
-		# return dy # initiallly returns zeroes bc they're all in a line
+		dx = other_body.x_coordinate - x_coordinate
+
+		dy = other_body.y_coordinate - y_coordinate
 
 		distance = Math.sqrt((dx * dx) + (dy * dy))
-		# return distance # probably works
 
 		force = (G * mass * other_body.mass) / (distance * distance)
-		# return force
 
 		fx = force * (dx / distance)
 		@total_fx += fx
-		# return total_fx # pretty sure this works
 
 		fy = force * (dy / distance)
 		@total_fy += fy
-		# return total_fy # this works before planets start moving
 	end
 
 	def calc_acc(body)
-		acc_x = @total_fx / mass
-		return acc_x # yaaaa
-		acc_y = @total_fy / mass
-		return acc_y
+		@acc_x = @total_fx / mass
+		@acc_y = @total_fy / mass
 	end
 
-	# def calc_vel(body)
-	# 	v_x = x_vel + (acc_x * time)
-	# 	v_y = y_vel + (acc_y * time)
-	# end
+	def calc_vel(body)
+		@v_x = @x_vel + (@acc_x * TIME)
+		@v_y = @y_vel + (@acc_y * TIME)
+	end
 
-	# def find_newpos()
-	# 	d = initial_pos + (v * time)
-	# end
+	def newpos(body)
+		pos_x = @x_coordinate + (@v_x * TIME)
+		@x_coordinate = pos_x
+		pos_y = @y_coordinate + (@v_y * TIME)	
+		@y_coordinate = pos_y
+		@x_vel = @v_x
+		@y_vel = @v_y
+	end
 
 	def reset()
     	@total_fx = 0
