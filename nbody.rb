@@ -10,21 +10,32 @@ class NbodySimulation < Gosu::Window
     @background_image = Gosu::Image.new("images/space.jpg", tileable: true)
     simulation = open(file) 
     info = simulation.read
-    radius_of_universe = 0
-    line_num = 0
+    @radius_of_universe = 0
+    line_num = 1
     @bodies = []
+    @number_of_bodies = 0
+    @body_count = 0
+    done = false
     File.open(file).each do |line| # opening the file in the nbody class, so as to only open once
     # not opening every time a body is created
-      line_num += 1
+      
       info = line.split(" ")
-      if line_num == 1  # skipping the first two lines before the planets
-        number_of_bodies = info
-      elsif line_num == 2 
-        radius_of_universe = info[0].to_f
-      elsif line_num != 1 && line_num != 2
-        
-        newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5].to_s, radius_of_universe)
-        @bodies.push(newBody)
+      if done == false
+        if line_num == 1 && info[0] != nil # skipping the first two lines before the planets
+          @number_of_bodies = info[0].to_f
+          line_num += 1
+        elsif line_num == 2 && info[0] != nil
+          @radius_of_universe = info[0].to_f
+          line_num += 1
+        elsif line_num != 1 && line_num != 2  && info[0] != nil && 
+         line_num += 1
+         @body_count += 1
+          newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5], @radius_of_universe)
+          @bodies.push(newBody)
+          if @body_count >= @number_of_bodies
+            done = true
+          end 
+        end
       end
     end
   end
@@ -35,7 +46,7 @@ class NbodySimulation < Gosu::Window
     end
     @bodies.each do |body|
       @bodies.each do |other_body| 
-        if body.mass != other_body.mass
+        if body != other_body
           body.calculate_totals(other_body)
         end
       end

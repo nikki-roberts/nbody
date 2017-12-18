@@ -19,7 +19,8 @@ class Body
 		@mass = mass
 		@image = image
 		@radius_of_universe = radius_of_universe
-		file = "images/" + image
+		file = "images/" + @image
+		# puts file
 		@image = Gosu::Image.new(file)
 		@total_fx = 0
 		@total_fy = 0
