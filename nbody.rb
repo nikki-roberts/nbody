@@ -27,11 +27,16 @@ class NbodySimulation < Gosu::Window
         elsif line_num == 2 && info[0] != nil
           @radius_of_universe = info[0].to_f
           line_num += 1
-        elsif line_num != 1 && line_num != 2  && info[0] != nil && 
+        elsif line_num != 1 && line_num != 2  && info[0] != nil 
          line_num += 1
          @body_count += 1
-          newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5], @radius_of_universe)
-          @bodies.push(newBody)
+          if info[7] != nil
+            newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5], @radius_of_universe, info[6].to_f, info[7].to_f)
+            @bodies.push(newBody)
+          else
+            newBody = Body.new(info[0].to_f, info[1].to_f, info[2].to_f, info[3].to_f, info[4].to_f, info[5], @radius_of_universe, info[6].to_f)
+            @bodies.push(newBody)
+          end
           if @body_count >= @number_of_bodies
             done = true
           end 
@@ -43,11 +48,17 @@ class NbodySimulation < Gosu::Window
   def update
     @bodies.each do |body|
       body.reset()
+      if body.info[7] != nil ??
+        body.reset_z()
+      end
     end
     @bodies.each do |body|
       @bodies.each do |other_body| 
         if body != other_body
           body.calculate_totals(other_body)
+        end
+        if body.info[7] != nil
+          body.calculate_z_totals(other_body)
         end
       end
     end
@@ -55,6 +66,11 @@ class NbodySimulation < Gosu::Window
       body.calc_acc(body)
       body.calc_vel(body)
       body.newpos(body)
+      if body.info[7] != nil
+        body.calc_z_acc(body)
+        body.calc_z_vel(body)
+        body.new_zpos(body)
+      end
     end
 
   end
